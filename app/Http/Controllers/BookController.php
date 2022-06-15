@@ -45,9 +45,9 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public function show($id)
     {
-        //$comic = Book::findOrfail($id);
+        $book = Book::findOrfail($id);
         return view('comic.show', compact('book'));
     }
 
