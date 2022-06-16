@@ -8,10 +8,10 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
     <body>
-        @include('partials.header')
+        
         <main>
             @yield('mainContent')
         </main>
-        @include('partials.footer')
+        
     </body>
 </html>

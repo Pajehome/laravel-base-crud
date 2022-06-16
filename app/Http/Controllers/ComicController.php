@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Book;
 
-class BookController extends Controller
+class ComicController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +25,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('comic.create');
     }
 
     /**
@@ -36,7 +36,22 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+      
+        $newComic = Book::create($data);
+        
+
+        // $newComic->title = $data['title'];
+        // $newComic->description = $data['description'];
+        // $newComic->thumb = $data['thumb'];
+        // $newComic->price = $data['price'];
+        // $newComic->sale_date = $data['sale_date'];
+        // $newComic->type = $data['type'];
+
+        $newComic->save();
+        
+        return redirect()->route('comics.show', $newComic->id);
+        
     }
 
     /**
@@ -45,10 +60,10 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Book $comic)
     {
-        $book = Book::findOrfail($id);
-        return view('comic.show', compact('book'));
+        //$book = Book::findOrfail($id);
+        return view('comic.show', compact('comic'));
     }
 
     /**
@@ -57,9 +72,9 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Book $comic)
     {
-        //
+        return view('comics.edit',compact('comic'));
     }
 
     /**
@@ -69,9 +84,19 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Comic $comic)
     {
-        //
+        $data = $request->all();
+        // $comic->title = $data['title'];
+        // $comic->description = $data['description'];
+        // $comic->thumb = $data['thumb'];
+        // $comic->price = $data['price'];
+        // $comic->sale_date = $data['sale_date'];
+        // $comic->type = $data['type'];
+
+        $comic->update($data);
+
+        return redirect()->route('comics.show', $comic->id);
     }
 
     /**
@@ -82,6 +107,8 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comic = Comic::findOrFail($id);
+        $comic->delete();
+        return redirect()->route('comics.index');
     }
 }
